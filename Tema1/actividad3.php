@@ -34,5 +34,3 @@ echo "Factorial de $a: " . $r1 . "\n";
 $b = -3;
 $r2 = calculador("factorial", $b);
 echo "Factorial de $b: " . $r2 . "\n";
-
-?>
