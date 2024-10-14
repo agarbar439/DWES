@@ -42,12 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $err = true;
     }
 }
-
-// Verifica si no hay un usuario autenticado
-if (!isset($_SESSION['usuario'])) {
-    header("Location: ej2.php?redirigido=true");
-    exit;
-}
+session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -74,19 +69,20 @@ if (!isset($_SESSION['usuario'])) {
             echo '<p>Zona Admin</p>'; // Zona exclusiva para admin
         }
 
-        // Mensaje visible para todos los usuario
-        if ($_SESSION['rol'] == 1 && $_SESSION['rol'] == 0) {
-            echo '<p>Link para usuarios</p>'; // Link visible para todos los usuarios
+        // Mensaje visible para usuarios
+        if ($_SESSION['rol'] == 0) {
+            echo '<p>Zona User</p>'; // Zona exclusiva para usuarios
         }
     } ?>
 
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <label for="usuario">Usuario</label>
-        <input value="<?php if (isset($_POST['usuario'])) echo htmlspecialchars($_POST['usuario']); ?>"
+        <input value="<?php if (isset($_POST['usuario'])) echo $_POST['usuario']; ?>"
             id="usuario" name="usuario" type="text">
         <label for="clave">Clave</label>
         <input id="clave" name="clave" type="password">
         <input type="submit" value="Iniciar sesión"> <!-- Botón para enviar el formulario -->
+
     </form>
 </body>
 
