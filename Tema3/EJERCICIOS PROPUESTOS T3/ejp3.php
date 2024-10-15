@@ -2,9 +2,8 @@
 $cadena_conexion = 'mysql:dbname=empleados;host=127.0.0.1';
 $usuario_bd = 'root';
 $clave_bd = 'daw.1509';
-$mensaje = ''; // Variable para los mensajes
 
-// Conexión a la base de datos usando PDO
+// Conexión a la base de datos 
 try {
     $bd = new PDO($cadena_conexion, $usuario_bd, $clave_bd);
     echo "Conexión exitosa" . "<br>" . "<br>";
@@ -39,9 +38,9 @@ try {
             <th>Ciudad</th>
         </tr>
         <?php
-        // Mostramos los registros
+        // Mostrar los registros
         if (!empty($resultados)) { // Si no esta vacio
-            foreach ($resultados as $row) {  
+            foreach ($resultados as $row) {
                 echo '<tr>';
                 echo '<td>' . $row["nombre"] . '</td>';
                 echo '<td>' . $row["apellido"] . '</td>';

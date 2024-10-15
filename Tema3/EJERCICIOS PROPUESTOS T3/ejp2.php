@@ -42,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $err = true;
     }
 }
-session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -55,35 +54,40 @@ session_destroy();
 </head>
 
 <body>
-    <?php if (isset($_SESSION['usuario'])) { // Solo mostrar mensajes si hay un usuario autenticado
-        if (isset($_GET["redirigido"])) {
-            echo "<p>Haga login para continuar</p>";
+    <?php
+    // Mostrar mensaje de error si las credenciales son incorrectas
+    if (isset($err)) {
+        echo "<p>Revisa usuario y contraseña</p>"; // Mensaje de error si las credenciales son incorrectas
+    }
+    // Solo mostrar si el usuario esta autenticado
+    if (isset($_SESSION['usuario'])) {
+
+        // Mostrar mensajes para los admin y usuarios
+        if ($_SESSION) {
+            echo '<p>Zona General</p>';
         }
 
-        if (isset($err) && $err) {
-            echo "<p>Revisa usuario y contraseña</p>"; // Mensaje de error si las credenciales son incorrectas
-        }
-
-        // Mensaje visible para admin
+        // Mostrar mensajes para admin
         if ($_SESSION['rol'] == 1) {
-            echo '<p>Zona Admin</p>'; // Zona exclusiva para admin
+            echo '<p>Zona Admin</p>'; // Zona para admin
         }
 
-        // Mensaje visible para usuarios
+        // Mostrar mensajes para usuarios
         if ($_SESSION['rol'] == 0) {
-            echo '<p>Zona User</p>'; // Zona exclusiva para usuarios
+            echo '<p>Zona User</p>'; // Zona para usuarios
         }
-    } ?>
-
-    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <label for="usuario">Usuario</label>
-        <input value="<?php if (isset($_POST['usuario'])) echo $_POST['usuario']; ?>"
-            id="usuario" name="usuario" type="text">
-        <label for="clave">Clave</label>
-        <input id="clave" name="clave" type="password">
-        <input type="submit" value="Iniciar sesión"> <!-- Botón para enviar el formulario -->
-
-    </form>
+    } else {
+        // Si no hay una sesion, mostrar el formulario
+    ?>
+        <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+            <label for="usuario">Usuario</label>
+            <input value="<?php if (isset($_POST['usuario'])) echo $_POST['usuario']; ?>"
+                id="usuario" name="usuario" type="text">
+            <label for="clave">Clave</label>
+            <input id="clave" name="clave" type="password">
+            <input type="submit" value="Iniciar sesión"> <!-- Botón para enviar el formulario -->
+        </form>
+    <?php } ?>
 </body>
 
 </html>
