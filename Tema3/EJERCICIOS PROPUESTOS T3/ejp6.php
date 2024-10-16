@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
 // Funcion para enviar elemail
 function sendEmail($enviarA, $nombre, $subject, $cuerpo) {
@@ -41,14 +41,17 @@ function sendEmail($enviarA, $nombre, $subject, $cuerpo) {
     }
 }
 
-// Obtener datos del formulario
-$email = $_POST['email']; // Email del destinatario
-$nombreDesti = $_POST['nombre']; // Nombre del destinatario
-$subject = $_POST['subject'];  // Asunto del correo
-$mensaje = $_POST['mensaje'];  // Cuerpo del mensaje
+// Procesar el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener datos del formulario
+    $email = $_POST['email'];
+    $nombreDesti = $_POST['nombre'];
+    $subject = $_POST['subject'];
+    $mensaje = $_POST['mensaje'];
 
-// Llamar a la función para enviar el correo
-sendEmail($email, $nombreDesti, $subject, $mensaje);
+    // Llamar a la función para enviar el correo
+    sendEmail($email, $nombreDesti, $subject, $mensaje);
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +63,7 @@ sendEmail($email, $nombreDesti, $subject, $mensaje);
 </head>
 <body>
     <h2>Envía un mensaje</h2>
-    <form method="POST">
+    <form method="POST" action="">
         <label for="nombre">Nombre: <input type="text" name="nombre" id="nombre" required></label><br><br>
         <label for="email">Email: <input type="email" name="email" id="email" required></label><br><br>
         <label for="subject">Sujeto: <input type="text" name="subject" id="subject" required></label><br><br>
