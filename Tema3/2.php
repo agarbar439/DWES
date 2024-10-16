@@ -2,7 +2,7 @@
 // Antonio Garcia Barrera
 /*Escribe un fichero que reciba dos parámetros, num1 y num2 y muestre su suma. Hay que comprobar que lo dos argumentos existan y sean números.*/
 
-// Funcion para calcular la suma
+// Funncion para calcular la suma
 function calcularSuma($num1, $num2){
     if(!is_numeric($num1) || !is_numeric($num2)){ // Comprobar que son numericos
        echo "Error, deben de ser numéricos";
