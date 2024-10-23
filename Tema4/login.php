@@ -2,7 +2,7 @@
 require_once 'bd.php';
 /*Formulario de login, abre sesion, guarda el nombre de usuario y redirige a principal.php */
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usu = comprobar_usuario($_POST["usuario"], $_POST['clave']);
+    $usu = comprobar_usuario($bd,$_POST["usuario"], $_POST['clave']);
     if ($usu === FALSE) {
         $err = TRUE;
         $usuario = $_POST['usuario'];
@@ -14,18 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 }
-function comprobar_usuario($usuario, $clave) {
-    require_once 'bd.php'; // Archivo de conexion de la bbdd
 
-    $sql = 'SELECT nombre FROM usuarios WHERE nombre = "' . $usuario . '" AND clave = "' . $clave . '"'; //Consulta para comprobar usuario y contraseña
-    $resultado = $conexion->query($sql); 
-
-    if ($resultado->num_rows > 0) { // Si hay algun dato
-        return $usuario; // DEvuelve el usuario
-    } else {
-        return FALSE; 
-}
-}
 ?>
 
 <!DOCTYPE html>
